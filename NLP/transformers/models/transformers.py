@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-from embeddings import PositionalEncoding, TokenEmbedding
-from encoder import Encoder
-from decoder import Decoder
+from models.embeddings import PositionalEncoding, TokenEmbedding
+from models.encoder import Encoder
+from models.decoder import Decoder
 
 
 class TransformerModel(nn.Module):

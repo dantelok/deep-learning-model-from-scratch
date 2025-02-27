@@ -17,7 +17,11 @@ class ScaledDotProductAttention(nn.Module):
 
         # Compute QK^T
         attention_scores = torch.matmul(Q, K.transpose(-2, -1)) / torch.sqrt(torch.tensor(d_k, dtype=torch.float32))
+        print(f"Attention Scores Shape: {attention_scores.shape}")  # Debugging
+
+        # Check Mask Shape
         if mask is not None:
+            print(f"Mask Shape: {mask.shape}")  # Debugging
             attention_scores = attention_scores.masked_fill(mask == 0, float('-inf'))
 
         # Softmax
