@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.nn.functional import F
+import math
 
 class ScaledDotProductAttention(nn.Module):
     def __init__(self, dropout=0.1):
@@ -10,7 +11,7 @@ class ScaledDotProductAttention(nn.Module):
     def forward(self, q, k, v, mask=None):
         d_k = q.shape[-1]
 
-        attention_score = torch.matmul(q, k.transpose(-1, -2)) / torch.sqrt(torch.tensor(d_k, dtype=torch.float32))
+        attention_score = torch.matmul(q, k.transpose(-1, -2)) / math.sqrt(d_k)
 
         if mask is not None:
             attention_score = attention_score.masked_fill(mask == 0, float('-inf'))
@@ -45,7 +46,17 @@ class MultiHeadAttention(nn.Module):
         k = self.w_k(k)
         v = self.w_v(v)
 
+        q = q.view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+        k = k.view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
+        v = v.view(batch_size, -1, self.num_heads, self.d_k).transpose(1, 2)
 
+        # Calculate Scaled Dot-Product Attention
+        attn_output, attn_weights = self.attention(q, k, v)
 
+        # Scale back to [batch_size, seq_len, d_model]
+        attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, -1, self.num_heads * self.d_k)
 
+        # Final layer
+        attn_output = self.w_o(attn_output)
 
+        return attn_output, attn_weights
