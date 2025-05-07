@@ -12,6 +12,7 @@ class TokenEmbedding(nn.Module):
     def forward(self, tokens):
         return self.embedding(tokens) * math.sqrt(self.d_model)
 
+
 class PositionalEmbedding(nn.Module):
     """Different from Transformer-bsed model; it's trainable"""
     def __init__(self, max_len, d_model):

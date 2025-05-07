@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
-from torch.nn.functional import F
+from torch.nn import functional as F
 import math
+
 
 class ScaledDotProductAttention(nn.Module):
     def __init__(self, dropout=0.1):
@@ -37,7 +38,6 @@ class MultiHeadAttention(nn.Module):
 
         self.attention = ScaledDotProductAttention(dropout=dropout)
         self.dropout = nn.Dropout(dropout)
-
 
     def forward(self, q, k, v, mask=None):
         batch_size = q.shape[0]

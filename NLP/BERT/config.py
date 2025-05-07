@@ -1,11 +1,12 @@
 config = {
-    "vocab_size": 30000,
-    "d_model": 512,
-    "num_heads": 8,
-    "d_ff": 2048,
-    "num_layers": 6,
+    "vocab_size": 30522,
+    "d_model": 768,
+    "max_len": 512,
+    "num_heads": 12,
+    "d_ff": 3072,
+    "num_layers": 12,
     "dropout": 0.1,
-    "batch_size": 2,
+    "batch_size": 8,
     "epochs": 20,
-    "lr": 0.0001
+    "lr": 3e-5,
 }
