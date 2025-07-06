@@ -26,26 +26,28 @@ class FeedForward(nn.Module):
         x = self.final_dropout(x)
         return x
 
-# Config
-batch_size = 2
-seq_len = 10
-d_model = 768
-d_ff = 3072
-dropout = 0.1
 
-# Dummy input
-x = torch.randn(batch_size, seq_len, d_model, requires_grad=True)
+if __name__ == '__main__':
+    # Config
+    batch_size = 2
+    seq_len = 10
+    d_model = 768
+    d_ff = 3072
+    dropout = 0.1
 
-# Instantiation
-ff = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout)
+    # Dummy input
+    x = torch.randn(batch_size, seq_len, d_model, requires_grad=True)
 
-# Forward pass
-output = ff(x)
+    # Instantiation
+    ff = FeedForward(d_model=d_model, d_ff=d_ff, dropout=dropout)
 
-# Output shape should match input shape
-print("Input shape:", x.shape)       # [2, 10, 768]
-print("Output shape:", output.shape) # [2, 10, 768]
+    # Forward pass
+    output = ff(x)
 
-# Optional: check if gradients flow
-output.mean().backward()
-print("Gradient check passed:", x.grad is not None)
+    # Check output shape == input shape
+    print("Input shape:", x.shape)        # [2, 10, 768]
+    print("Output shape:", output.shape)  # [2, 10, 768]
+
+    # Check if gradients flow
+    output.mean().backward()
+    print("Gradient check passed:", x.grad is not None)

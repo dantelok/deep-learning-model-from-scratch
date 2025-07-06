@@ -67,18 +67,19 @@ class BERT(nn.Module):
         return mlm_logits, nsp_logits
 
 
-vocab_size = 30522
-batch_size = 2
-seq_len = 16
-d_model = 768
+if __name__ == '__main__':
+    vocab_size = 30522
+    batch_size = 2
+    seq_len = 16
+    d_model = 768
 
-model = BERT(vocab_size=vocab_size)
+    model = BERT(vocab_size=vocab_size)
 
-token_ids = torch.randint(0, vocab_size, (batch_size, seq_len))
-segment_ids = torch.randint(0, 2, (batch_size, seq_len))
-mask = (token_ids != 0).unsqueeze(1).unsqueeze(2)
+    token_ids = torch.randint(0, vocab_size, (batch_size, seq_len))
+    segment_ids = torch.randint(0, 2, (batch_size, seq_len))
+    mask = (token_ids != 0).unsqueeze(1).unsqueeze(2)
 
-mlm_logits, nsp_logits = model(token_ids, segment_ids, mask)
+    mlm_logits, nsp_logits = model(token_ids, segment_ids, mask)
 
 print("MLM shape:", mlm_logits.shape)  # [B, T, vocab_size]
 print("NSP shape:", nsp_logits.shape)  # [B, 2]

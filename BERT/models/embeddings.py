@@ -61,21 +61,22 @@ class BERTEmbedding(nn.Module):
         x = token_embed + position_embed + segment_embed
         return self.dropout(self.layer_norm(x))
 
-# Test
-vocab_size = 1000
-d_model = 768
-batch_size = 2
-seq_len = 10
 
-# Dummy Input
-token_ids = torch.randint(0, vocab_size, (batch_size, seq_len))   # [batch_size, seq_len]
-segment_ids = torch.randint(0, 2, (batch_size, seq_len))          # [batch_size, seq_len], values in {0, 1}
+if __name__ == '__main__':
+    vocab_size = 1000
+    d_model = 768
+    batch_size = 2
+    seq_len = 10
 
-# Instantiate and Run
-embedding = BERTEmbedding(vocab_size=vocab_size, d_model=d_model)
-output = embedding(token_ids, segment_ids)
+    # Dummy Input
+    token_ids = torch.randint(0, vocab_size, (batch_size, seq_len))   # [batch_size, seq_len]
+    segment_ids = torch.randint(0, 2, (batch_size, seq_len))          # [batch_size, seq_len], values in {0, 1}
 
-# Output Check
-print("Input token_ids shape:", token_ids.shape)
-print("Input segment_ids shape:", segment_ids.shape)
-print("Output embeddings shape:", output.shape)  # Expected: [batch_size, seq_len, d_model]
+    # Instantiate and Run
+    embedding = BERTEmbedding(vocab_size=vocab_size, d_model=d_model)
+    output = embedding(token_ids, segment_ids)
+
+    # Output Check
+    print("Input token_ids shape:", token_ids.shape)
+    print("Input segment_ids shape:", segment_ids.shape)
+    print("Output embeddings shape:", output.shape)  # Expected: [batch_size, seq_len, d_model]

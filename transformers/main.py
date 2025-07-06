@@ -5,7 +5,7 @@ from transformers import AutoTokenizer
 
 from models.transformers import TransformerModel
 
-from utils.datesets import CustomDataset
+from utils.datasets import CustomDataset
 from utils.train import train_transformer
 from utils.eval import evaluate_transformer
 
